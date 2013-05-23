@@ -48,7 +48,6 @@ module.exports = function(app){
                     req.flash('error', err);
                     return res.redirect('/');
                 }
-                console.log(postion);
                 res.render('index',{
                     title:'主页',
                     user: req.session.user,
