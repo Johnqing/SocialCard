@@ -1,0 +1,29 @@
+<!doctype html>
+<html lang="en-US">
+<head>
+    <meta charset="UTF-8">
+    <title><%= title %></title>
+    <link rel="stylesheet" href="/css/base.css"/>
+</head>
+<body>
+<!--header-->
+<div class="header">
+    <div class="header-bar clearfix">
+        <!--logo-->
+        <div class="logo fl">
+            <h1>SocialCard</h1>
+        </div>
+        <!--menu-->
+        <div class="menu fr">
+            <% if(locals.user){ %>
+            <a href="/">我的主页</a>
+            <a href="/logout">退出</a>
+            <% } else { %>
+            <a href="/reg">注册</a>
+            <a href="/login">登录</a>
+            <% } %>
+        </div>
+        <!--menu end-->
+    </div>
+</div>
+<!--header end-->
