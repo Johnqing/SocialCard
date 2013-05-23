@@ -23,12 +23,7 @@ require(['jquery','drag'], function($){
         yEnd:  $('body').height() - layout.innerHeight(),
         drag: layout,
         callback: function(){
-            $.post("/layoutPage",
-                {left: this.left,top: this.top},
-                function (data, textStatus){
-
-                },
-            "json");
+            $.post("/layoutPage", {left: this.left,top: this.top});
         }
     });
     /**
@@ -41,7 +36,7 @@ require(['jquery','drag'], function($){
         yEnd:  $('body').height() - layout.innerHeight(),
         drag: controller,
         callback: function(){
-            console.log(this.left + " " + this.top);
+            $.post("/controller", {left: this.left,top: this.top});
         }
     });
 });

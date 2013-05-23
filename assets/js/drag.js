@@ -131,7 +131,7 @@ define(['jquery'], function($) {
             if(e.pageX || e.pageY){
                  return {x:e.pageX, y:e.pageY};
             }
-            return{
+            return {
                 x:e.clientX + bdy.scrollLeft - bdy.clientLeft,
                 y:e.clientY + bdy.scrollTop - bdy.clientTop
             };
@@ -146,6 +146,7 @@ define(['jquery'], function($) {
      * @return {[type]} [description]
      */
     $.fn.drag = function(opts){
+        if(!$(this).length){return;};
         opts = $.extend({},defaultConfig, opts);
         new Drag($(this), opts);
     };

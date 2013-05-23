@@ -37,22 +37,29 @@ var loginChect = {
 
 module.exports = function(app){
     //index
-    app.get('/', function(req, res){
-        layoutPos.get(null, function(err, pos){
-            if(err){
-                pos = {
-                    x:10,
-                    y:50
-                };
+    app.get('/:user', function(req, res){
+        User.get(req.params.user, function(err, user){
+            if(!user){
+                req.flash('error', '该用户不存在！');
+                return res.redirect('/')
             }
-            res.render('index',{
-                title:'主页',
-                user: req.session.user,
-                pos: pos,
-                success: req.flash('success').toString(),
-                error: req.flash('error').toString()
+            layoutPos.get(user.name, function(err, postion){
+                if(err){
+                    req.flash('error', err);
+                    return res.redirect('/');
+                }
+                console.log(postion);
+                res.render('index',{
+                    title:'主页',
+                    user: req.session.user,
+                    pos: postion.pos.pos,
+                    controller: postion.pos.controller,
+                    success: req.flash('success').toString(),
+                    error: req.flash('error').toString()
+                });
             });
         });
+
     });
 //    req
     app.get('/reg', loginChect.notLogin);
@@ -143,10 +150,28 @@ module.exports = function(app){
     app.post('/layoutPage', function(req, res){
         var data = {
                 username: req.session.user.name,
-                title: req.body.title,
-                pos: req.body.pos
+                pos: req.body
             },
             layPos = new layoutPos(data);
+        console.log(req.body);
+        //console.log(data.post);
+        layPos.save(function(err){
+            if(err){
+                req.flash('error', err);
+                return res.json({error: err});
+            }
+            req.flash('success','发表成功!');
+            res.json({success: 1})
+
+        })
+    });
+    app.post('/controller', function(req, res){
+        var data = {
+                username: req.session.user.name,
+                controller: req.body
+            },
+            layPos = new layoutPos(data);
+        console.log(req.body);
         //console.log(data.post);
         layPos.save(function(err){
             if(err){

@@ -23,12 +23,11 @@ LayoutPos.prototype = {
                     mongodb.close();
                     return callback(err);
                 }
+                console.log(self.pos);
                 collection.ensureIndex('user');
-                collection.insert(self.pos, {
-                    safe: true
-                }, function(err, post){
+                collection.update({"name": self.pos.username}, {$set: self.pos},  {upsert:true}, function(err, layout){
                     mongodb.close();
-                    callback(err, post);
+                    callback(err, layout);
                 });
 
             });
@@ -59,18 +58,9 @@ LayoutPos.get = function(username, callback){
                 if(err){
                     callback(err);
                 }
-                var postion = [];
-
-                docs.forEach(function(doc, index){
-                    var newDoc = {
-                        user: doc.username,
-                        title: doc.title,
-                        pos: doc.pos
-                    };
-                    postion.push(newDoc);
+                callback(null, {
+                    pos: docs[0]
                 });
-
-                callback(null, postion);
             });
 
         });
