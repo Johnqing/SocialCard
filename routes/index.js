@@ -38,7 +38,6 @@ var loginChect = {
 module.exports = function(app){
     //index
     app.get('/', function(req, res){
-        console.log(req.session.user);
         res.render('index',{
             title:'主页',
             user: req.session.user,
@@ -174,7 +173,6 @@ module.exports = function(app){
                 pos: req.body
             },
             layPos = new layoutPos(data);
-        //console.log(data.post);
         layPos.save(function(err){
             if(err){
                 req.flash('error', err);
@@ -182,7 +180,7 @@ module.exports = function(app){
             }
             res.json({success: 1})
 
-        })
+        });
     });
     app.post('/controller', function(req, res){
         var data = {
@@ -190,16 +188,13 @@ module.exports = function(app){
                 controller: req.body
             },
             layPos = new layoutPos(data);
-        console.log(req.body);
-        //console.log(data.post);
         layPos.save(function(err){
             if(err){
                 req.flash('error', err);
                 return res.json({error: err});
             }
             res.json({success: 1})
-
-        })
+        });
     });
 };
 

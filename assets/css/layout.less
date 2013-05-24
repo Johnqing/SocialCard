@@ -131,7 +131,43 @@
   z-index: 998;
   .boxShadow(0 0 5px #000);
   .radius(5px,5px,5px,5px);
+  .controller-title{
+    display: block;
+    border-top: 1px solid #4F575E;
+    padding:10px;
+    cursor: pointer;
+  }
+  .constroller-con{
+    display: none;
+    position: relative;
+    overflow: hidden;
+    ul{
+      .haslayout();
+      width: 3000px;
+      li{
+        float: left;
+        padding: 10px 10px 20px;
+        width: 230px;
+      }
+    }
+  }
+  .active{
+    display: block;
+  }
 }
+
+.constroller-con{
+  li{
+    .controller-panel-nav{
+      overflow: hidden;
+      cursor: pointer;
+      margin-bottom: 10px;
+      border-bottom: 1px dotted #4F575E;
+      padding-bottom: 10px;
+    }
+  }
+}
+
 #controller-drag{
   position: relative;
   display: block;

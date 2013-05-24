@@ -10,7 +10,7 @@ require.config({
 /**
  * 主体
  */
-require(['jquery','drag'], function($){
+require(['jquery','drag','controller'], function($){
     var layout = $('[data-type="layout"]'),
         controller = $('[data-type="controller"]');
     /**
