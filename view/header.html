@@ -16,7 +16,7 @@
         <!--menu-->
         <div class="menu fr">
             <% if(locals.user){ %>
-            <a href="/">我的主页</a>
+            <a href="/<%= locals.user.name %>">我的主页</a>
             <a href="/logout">退出</a>
             <% } else { %>
             <a href="/reg">注册</a>
@@ -27,3 +27,13 @@
     </div>
 </div>
 <!--header end-->
+<% if (locals.success) { %>
+<div >
+    <%= locals.success %>
+</div>
+<% } %>
+<% if (locals.error) { %>
+<div>
+    <%= locals.error %>
+</div>
+<% } %>

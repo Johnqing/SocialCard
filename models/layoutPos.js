@@ -61,6 +61,7 @@ LayoutPos.get = function(username, callback){
                 callback(null, {
                     pos: docs[0]
                 });
+                    console.log(docs);
             });
 
         });

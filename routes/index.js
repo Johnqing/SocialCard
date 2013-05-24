@@ -37,30 +37,16 @@ var loginChect = {
 
 module.exports = function(app){
     //index
-    app.get('/:user', function(req, res){
-        User.get(req.params.user, function(err, user){
-            if(!user){
-                req.flash('error', '该用户不存在！');
-                return res.redirect('/')
-            }
-            layoutPos.get(user.name, function(err, postion){
-                if(err){
-                    req.flash('error', err);
-                    return res.redirect('/');
-                }
-                res.render('index',{
-                    title:'主页',
-                    user: req.session.user,
-                    pos: postion.pos.pos,
-                    controller: postion.pos.controller,
-                    success: req.flash('success').toString(),
-                    error: req.flash('error').toString()
-                });
-            });
+    app.get('/', function(req, res){
+        console.log(req.session.user);
+        res.render('index',{
+            title:'主页',
+            user: req.session.user,
+            success: req.flash('success').toString(),
+            error: req.flash('error').toString()
         });
-
     });
-//    req
+    //    req
     app.get('/reg', loginChect.notLogin);
     app.get('/reg', function(req, res){
            res.render('reg', {
@@ -145,21 +131,55 @@ module.exports = function(app){
         req.flash('success', '退出成功!');
         res.redirect('/');
     });
-    //end
+    //user
+    app.get('/:user', function(req, res){
+        User.get(req.params.user, function(err, user){
+            if(!user){
+                req.flash('error', '该用户不存在！');
+                return res.redirect('/')
+            }
+            layoutPos.get(user.name, function(err, postion){
+                if(err){
+                    req.flash('error', err);
+                    return res.redirect('/');
+                }
+                if(!postion.pos){
+                    postion.pos = {
+                        pos: 0,
+                        controller: 0
+                    }
+                };
+                postion = postion.pos;
+                if(!postion.pos){
+                    postion.pos = 0;
+                }
+                if(!postion.controller){
+                    postion.controller = 0;
+                }
+                res.render('user',{
+                    title:'主页',
+                    user: req.session.user,
+                    pos: postion.pos,
+                    controller: postion.controller,
+                    success: req.flash('success').toString(),
+                    error: req.flash('error').toString()
+                });
+            });
+        });
+
+    });
     app.post('/layoutPage', function(req, res){
         var data = {
                 username: req.session.user.name,
                 pos: req.body
             },
             layPos = new layoutPos(data);
-        console.log(req.body);
         //console.log(data.post);
         layPos.save(function(err){
             if(err){
                 req.flash('error', err);
                 return res.json({error: err});
             }
-            req.flash('success','发表成功!');
             res.json({success: 1})
 
         })
@@ -177,7 +197,6 @@ module.exports = function(app){
                 req.flash('error', err);
                 return res.json({error: err});
             }
-            req.flash('success','发表成功!');
             res.json({success: 1})
 
         })
