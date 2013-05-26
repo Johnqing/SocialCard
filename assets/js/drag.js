@@ -68,7 +68,7 @@ define(['jquery'], function($) {
         },
         move: function(e){
             var self = this;
-            self.stopSlect();
+            //self.stopSlect();
             //阀门
             if(self.flag){
                 self.pos = self.getMousePos(e);
@@ -146,7 +146,6 @@ define(['jquery'], function($) {
      * @return {[type]} [description]
      */
     $.fn.drag = function(opts){
-        if(!$(this).length){return;};
         opts = $.extend({},defaultConfig, opts);
         new Drag($(this), opts);
     };

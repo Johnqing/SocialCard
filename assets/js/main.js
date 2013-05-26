@@ -10,7 +10,7 @@ require.config({
 /**
  * 主体
  */
-require(['jquery','drag','controller'], function($){
+require(['jquery','jeditor','drag','controller'], function($,jeditor){
     var layout = $('[data-type="layout"]'),
         controller = $('[data-type="controller"]');
     /**
@@ -38,5 +38,23 @@ require(['jquery','drag','controller'], function($){
         callback: function(){
             $.post("/controller", {left: this.left,top: this.top});
         }
+    });
+    /**
+     * 自我简介
+     */
+    $('#information').editor({
+        defaultIframeContent:'sjdjsds',
+        ifWidth: 232,
+        ifHeight: 158,
+        menuObj: $('#informationSet'),
+        menu:[
+            {'type':'bold','name':'B'},
+            {'type':'italic','name':'I'},
+            {'type':'underline','name':'U'},
+            {'type':'justifycenter','name':'C'},
+            {'type':'justifyleft','name':'L'},
+            {'type':'justifyright','name':'R'},
+            {'type':'createlink','name':'link'}
+        ]
     });
 });

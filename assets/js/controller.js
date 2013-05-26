@@ -14,4 +14,9 @@ define(['jquery'], function($){
         oUL.find('li:eq('+index+')').show().siblings(':not(:first)').hide();
         oUL.css("position","relative").animate({left: ~250}, "slow");
     });
+    //点击头部切换
+    $('.controller-container-header').bind('click',function(){
+        var oUL = $(this).parents('ul');
+        oUL.css("position","relative").animate({left: 0}, "slow");
+    });
 });
