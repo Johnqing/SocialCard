@@ -10,7 +10,7 @@ require.config({
 /**
  * 主体
  */
-require(['jquery','jeditor','drag','controller'], function($,jeditor){
+require(['jquery','ctlchange','jeditor','drag','controller'], function($,ntpl){
     var layout = $('[data-type="layout"]'),
         controller = $('[data-type="controller"]');
     /**
@@ -57,4 +57,13 @@ require(['jquery','jeditor','drag','controller'], function($,jeditor){
             {'type':'createlink','name':'link'}
         ]
     });
+    /**
+     * 模板生成
+     */
+    var tpl = ntpl({
+        'aboutname': 'liuqing',
+        'abouttag': ['it','js','f2e'],
+        'aboutdes': 'it男，前端开发、js'
+    });
+    $('#layout-page').html(tpl);
 });

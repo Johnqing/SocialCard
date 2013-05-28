@@ -23,7 +23,7 @@ LayoutPos.prototype = {
                     mongodb.close();
                     return callback(err);
                 }
-                console.log(self.pos);
+                console.log('save:'+self.pos);
                 collection.ensureIndex('user');
                 collection.update({"name": self.pos.username}, {$set: self.pos},  {upsert:true}, function(err, layout){
                     mongodb.close();
@@ -54,6 +54,7 @@ LayoutPos.get = function(username, callback){
             collection.find(query).sort({
                 time: -1
             }).toArray(function(err, docs){
+                    console.log(docs);
                 mongodb.close();
                 if(err){
                     callback(err);
@@ -61,7 +62,6 @@ LayoutPos.get = function(username, callback){
                 callback(null, {
                     pos: docs[0]
                 });
-                    console.log(docs);
             });
 
         });
