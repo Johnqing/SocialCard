@@ -60,10 +60,6 @@ require(['jquery','ctlchange','jeditor','drag','controller'], function($,ntpl){
     /**
      * 模板生成
      */
-    var tpl = ntpl({
-        'aboutname': 'liuqing',
-        'abouttag': ['it','js','f2e'],
-        'aboutdes': 'it男，前端开发、js'
-    });
+    var tpl = ntpl(baseConfig);
     $('#layout-page').html(tpl);
 });

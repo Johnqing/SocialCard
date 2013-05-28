@@ -9,15 +9,15 @@ define(['tpm'], function(nTpl){
     var tpl = function(data, callback){
         var Name = '<div id="userpage-layout-about-header">'+
                         '<div id="name_custom_font">'+
-                        '<h1 id="userpage-layout-about-name"><%= aboutname %></h1>'+
+                        '<h1 id="userpage-layout-about-name"><%= username %></h1>'+
                         '</div>'+
                     '</div>';
         var Tag = '<div id="userpage-layout-tag-container">'+
-                        '<% for(var i=0; i<abouttag.length; i++){ %>'+
-                        '<span><a href="/search?tag=<%= abouttag[i] %>"><%= abouttag[i] %></a></span>'+
+                        '<% for(var i=0; i<tags.length; i++){ %>'+
+                        '<span><a href="/search?tag=<%= tags[i] %>"><%= tags[i] %></a></span>'+
                         '<% } %>'+
                    '</div>';
-        var Des = '<div id="userpage-layout-about-description"><%= aboutdes %></div>';
+        var Des = '<div id="userpage-layout-about-description"><%= des %></div>';
         tplHTML= Name + Tag + Des;
         return nTpl.tpl(tplHTML, data);
     };

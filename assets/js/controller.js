@@ -10,13 +10,14 @@ define(['jquery'], function($){
     subCont.bind('click', function(){
         var self = $(this),
             oUL = self.parents('ul'),
-            index = self.index() + 1;
-        oUL.find('li:eq('+index+')').show().siblings(':not(:first)').hide();
-        oUL.css("position","relative").animate({left: ~250}, "slow");
+            index = self.index() + 1,
+            liItem = oUL.find('li:eq('+index+')');
+        liItem.show().siblings(':not(:first)').hide();
+        oUL.css("position","relative").animate({left: ~250, height: liItem.innerHeight()}, "slow");
     });
     //点击头部切换
     $('.controller-container-header').bind('click',function(){
         var oUL = $(this).parents('ul');
-        oUL.css("position","relative").animate({left: 0}, "slow");
+        oUL.css("position","relative").animate({left: 0, height: 120}, "slow");
     });
 });
