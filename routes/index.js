@@ -138,6 +138,7 @@ module.exports = function(app){
                 return res.redirect('/')
             }
             layoutPos.get(user.name, function(err, postion){
+                console.log(postion);
                 if(err){
                     req.flash('error', err);
                     return res.redirect('/');
@@ -179,14 +180,24 @@ module.exports = function(app){
                 return res.json({error: err});
             }
             res.json({success: 1})
-
         });
     });
     app.post('/controller', function(req, res){
         var data = {
-                username: req.session.user.name,
+                name: req.session.user.name,
                 controller: req.body
             },
+            layPos = new layoutPos(data);
+        layPos.save(function(err){
+            if(err){
+                req.flash('error', err);
+                return res.json({error: err});
+            }
+            res.json({success: 1})
+        });
+    });
+    app.post('/saveChange', function(req, res){
+        var data = req.body,
             layPos = new layoutPos(data);
         layPos.save(function(err){
             if(err){

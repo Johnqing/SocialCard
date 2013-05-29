@@ -23,9 +23,8 @@ LayoutPos.prototype = {
                     mongodb.close();
                     return callback(err);
                 }
-                console.log('save:'+self.pos);
                 collection.ensureIndex('user');
-                collection.update({"name": self.pos.username}, {$set: self.pos},  {upsert:true}, function(err, layout){
+                collection.update({"name": self.pos.name}, {$set: self.pos},  {upsert:true}, function(err, layout){
                     mongodb.close();
                     callback(err, layout);
                 });
@@ -35,7 +34,7 @@ LayoutPos.prototype = {
     }
 };
 
-LayoutPos.get = function(username, callback){
+LayoutPos.get = function(name, callback){
     mongodb.open(function(err, db){
         if(err){
             return callback(err);
@@ -48,8 +47,8 @@ LayoutPos.get = function(username, callback){
             }
             var query = {};
 
-            if(username){
-                query.username = username;
+            if(name){
+                query.name = name;
             }
             collection.find(query).sort({
                 time: -1

@@ -88,6 +88,7 @@ require(['jquery','ctlchange','jeditor','drag','controller'], function($,ntpl){
     $('[name="username"]').bind('blur', function(){
         baseConfig['username'] = $(this).val();
         renderCard();
+        $.post('/saveChange', { 'username': $(this).val() });
     });
     //标签
     $('[name="tags"]').bind('blur', function(){
@@ -95,5 +96,6 @@ require(['jquery','ctlchange','jeditor','drag','controller'], function($,ntpl){
         tags = tags.length > 5 ? (tags.slice(0,5)) : tags;
         baseConfig['tags'] = tags;
         renderCard();
+        $.post('/saveChange', { 'tags': tags });
     });
 });
