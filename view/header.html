@@ -4,12 +4,20 @@
     <meta charset="UTF-8">
     <title><%= title %></title>
     <link rel="stylesheet" href="/css/base.css"/>
-    <script>
+    <script type="text/javascript">
+    <% if(locals.user){%>
         var baseConfig = {
             username: '<%= locals.user.name %>',
-            'tags': ['it','js','f2e'],
-            'des': 'it男，前端开发、js'
-        }
+            tags: ['it','js','f2e'],
+            des: 'it男，前端开发、js'
+        };
+    <% }else{ %>
+        var baseConfig = {
+            username: '',
+            tags: '',
+            des: ''
+        };
+    <% } %>
     </script>
 </head>
 <body>
