@@ -11,6 +11,7 @@ define(['jquery'], function($){
         ifWidth: 300,
         ifHeight: 400,
         menuObj: null,
+        toolCallback: function(){},
         menu:[
             {'type':'bold','name':'B'},
             {'type':'italic','name':'I'},
@@ -38,6 +39,8 @@ define(['jquery'], function($){
         this.ifHeight = opts.ifHeight;
         this.menuObj = opts.menuObj;
         this.menu = opts.menu;
+        this.toolCallback = opts.toolCallback;
+        this.before = opts.before;
         this.callback = opts.callback;
 
         this.switchEditMode = true;
@@ -46,6 +49,7 @@ define(['jquery'], function($){
     }
     Editor.prototype = {
         init: function(){
+            this.before.call(this);
             this.target.hide();
             this.createIframe();
             this.createMenu();
@@ -88,7 +92,11 @@ define(['jquery'], function($){
             self.menuObj.delegate('sub','click', function(){
                 self.changeStyle($(this).attr('data-type'));
             });
+            $(self.iframe.contentWindow.document).bind('keyup', self.keyup);
+            $(self.iframe.contentWindow.document.body).bind('blur', self.blur);
         },
+        keyup: function(e){},
+        blur: function(e){},
         /**
          * 给当前文档或者选中内容添加样式
          * @param command
@@ -120,6 +128,7 @@ define(['jquery'], function($){
                     self.iframeDocument.execCommand(command, false, '');
                     self.iframe.contentWindow.focus();
             }
+            self.toolCallback($(self.iframe.contentWindow.document.body));
         },
         cssRules: function(el, val){
             if(val === "none"){

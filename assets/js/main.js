@@ -47,6 +47,11 @@ require(['jquery','ctlchange','jeditor','drag','controller'], function($,ntpl){
         ifWidth: 232,
         ifHeight: 158,
         menuObj: $('#informationSet'),
+        toolCallback: function(obj){
+            var des = obj.html();
+            baseConfig['des'] = des;
+            renderCard();
+        },
         menu:[
             {'type':'bold','name':'B'},
             {'type':'italic','name':'I'},
@@ -54,12 +59,41 @@ require(['jquery','ctlchange','jeditor','drag','controller'], function($,ntpl){
             {'type':'justifycenter','name':'C'},
             {'type':'justifyleft','name':'L'},
             {'type':'justifyright','name':'R'},
-            {'type':'createlink','name':'link'}
-        ]
+            {'type':'createlink','name':'link'},
+            {'type':'unlink','name':'unlink'}
+        ],
+        before: function(){
+            var self = this;
+            self.keyup = function(e){
+                var des = $(e.target).html();
+                baseConfig['des'] = des;
+                renderCard();
+            };
+            self.blur = function(e){
+                var des = $(e.target).html();
+                baseConfig['des'] = des;
+                renderCard();
+            }
+        }
     });
     /**
      * 模板生成
      */
-    var tpl = ntpl(baseConfig);
-    $('#layout-page').html(tpl);
+    function renderCard(){
+        var tpl = ntpl(baseConfig);
+        $('#layout-page').html(tpl);
+    }
+    renderCard();
+    //姓名渲染
+    $('[name="username"]').bind('blur', function(){
+        baseConfig['username'] = $(this).val();
+        renderCard();
+    });
+    //标签
+    $('[name="tags"]').bind('blur', function(){
+        var tags = $(this).val().split(' ');
+        tags = tags.length > 5 ? (tags.slice(0,5)) : tags;
+        baseConfig['tags'] = tags;
+        renderCard();
+    });
 });
