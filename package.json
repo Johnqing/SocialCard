@@ -8,9 +8,10 @@
   "dependencies": {
     "express": "*",
     "ejs": "*",
-    "markdown-js": "*",
-    "mongodb": "*",
-    "connect-mongo": "*",
+    "mongoose": "*",
+    "connect": "*",
+    "express-mongoose": "*",
+    "session-mongoose": "*",
     "connect-flash": "*"
   },
   "devDependencies": {

@@ -5,8 +5,6 @@
  * Time: 下午11:10
  * To change this template use File | Settings | File Templates.
  */
-var settings = require('../setting'),
-    Db = require('mongodb').Db,
-    Connection = require('mongodb').Connection,
-    Server = require('mongodb').Server;
-module.exports = new Db(settings.db, new Server(settings.host, Connection.DEFAULT_PORT, {}));
+var mongoose = require('mongoose')
+    , settings = require('../setting');
+module.exports = mongoose.connect(settings.host, settings.db, settings.port);

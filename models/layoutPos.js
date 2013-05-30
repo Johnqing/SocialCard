@@ -5,66 +5,37 @@
  * Time: 下午4:29
  * To change this template use File | Settings | File Templates.
  */
-var mongodb = require('./db');
+var mongoose = require('./db'),
+    Schema = mongoose.Schema;
 
-var LayoutPos = function(pos){
-    this.pos = pos;
-}
 
-LayoutPos.prototype = {
-    save: function(callback){
-        var self = this;
-        mongodb.open(function(err, db){
-            if(err){
-                return callback(err);
-            }
-            db.collection('layout', function(err, collection){
-                if(err){
-                    mongodb.close();
-                    return callback(err);
-                }
-                collection.ensureIndex('user');
-                collection.update({"uid": self.pos.uid}, {$set: self.pos},  {upsert:true}, function(err, layout){
-                    mongodb.close();
-                    callback(err, layout);
-                });
+var infoSchema = new Schema({
+    uid: String,
+    username: String,
+    tags: String,
+    des: String,
+    pos: Object,
+    controller: Object
+});
 
-            });
-        });
-    }
+infoSchema.pre('save', function (next) {
+    next();
+});
+
+mongoose.model('layout', infoSchema);
+var LayoutModel = mongoose.model('layout');
+
+
+var LayoutPos = {};
+
+LayoutPos.save = function(data, callback){
+    LayoutModel.update(data.uid, {$set: data}, {upsert: true, multi: true}, function(err, doc){
+       callback(err, doc);
+    });
 };
-
 LayoutPos.get = function(uid, callback){
-    mongodb.open(function(err, db){
-        if(err){
-            return callback(err);
-        }
-
-        db.collection('layout', function(err, collection){
-            if(err){
-                mongodb.close();
-                return callback(err);
-            }
-            var query = {};
-
-            if(uid){
-                query.uid = uid;
-            }
-            collection.find(query).sort({
-                time: -1
-            }).toArray(function(err, docs){
-                console.log(docs[0]);
-                mongodb.close();
-                if(err){
-                    callback(err);
-                }
-                callback(null, docs[0]);
-            });
-
-        });
-
-
-
+    LayoutModel.find({uid: uid}, function(err, doc){
+        callback(err, doc[0]);
     });
 }
 

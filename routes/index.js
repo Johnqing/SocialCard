@@ -65,13 +65,14 @@ module.exports = function(app){
         var md5 = crypto.createHash('md5');
         var password = md5.update(req.body.password).digest('base64');
         //传参给user模块
-        var newUser = new User({
+        var newUser = {
             uid: req.body.username,
             username: req.body.username,
             password: password
-        });
+        };
         //查询数据库存在此用户名
         User.get(newUser.uid, function(err, user){
+            console.log(user);
             if(user){
                 err = '用户已存在';
             }
@@ -79,7 +80,8 @@ module.exports = function(app){
                 req.flash('error', err);
                 return res.redirect('/reg');
             }
-            newUser.save(function(err){
+
+            User.save(newUser, function(err){
                 if(err){
                     req.flash('error',err);
                     return res.redirect('/reg');
@@ -156,6 +158,7 @@ module.exports = function(app){
         });
         //用户信息设置
         function userInfoUp(userInfo){
+            console.log(userInfo);
             if(!userInfo.pos){
                 userInfo.pos = 0;
             }
@@ -165,17 +168,16 @@ module.exports = function(app){
 
             userInfo.username = userInfo.username ? userInfo.username : "姓名";
             userInfo.tags = userInfo.tags ? userInfo.tags : "";
-            userInfo.des = userInfo.des ? '-'+userInfo.des+'-' : "";
+            userInfo.des = userInfo.des ? userInfo.des : "";
             return userInfo;
         }
     });
     app.post('/layoutPage', function(req, res){
         var data = {
-                uid: req.session.user.uid,
-                pos: req.body
-            },
-            layPos = new layoutPos(data);
-        layPos.save(function(err){
+            uid: req.session.user.uid,
+            pos: req.body
+        };
+        layoutPos.save(data, function(err){
             if(err){
                 req.flash('error', err);
                 return res.json({error: err});
@@ -185,11 +187,10 @@ module.exports = function(app){
     });
     app.post('/controller', function(req, res){
         var data = {
-                uid: req.session.user.uid,
-                controller: req.body
-            },
-            layPos = new layoutPos(data);
-        layPos.save(function(err){
+            uid: req.session.user.uid,
+            controller: req.body
+        };
+        layoutPos.save(data, function(err){
             if(err){
                 req.flash('error', err);
                 return res.json({error: err});
@@ -204,8 +205,7 @@ module.exports = function(app){
         if(data.tags){
             data.tags = data.tags.split(' ');
         }
-        var layPos = new layoutPos(data);
-        layPos.save(function(err){
+        layoutPos.save(data, function(err){
             if(err){
                 req.flash('error', err);
                 return res.json({error: err});

@@ -2,10 +2,15 @@ var express = require('express')
   , routes = require('./routes')
   , http = require('http')
   , path = require('path')
-  , MongoStore = require('connect-mongo')(express)
+  , mongoose = require('mongoose')
   , settings = require('./setting')
   , flash = require('connect-flash');
 
+var connect = require('connect');
+var SessionStore = require("session-mongoose")(connect);
+var store = new SessionStore({
+    db: settings.db
+});
 
 var app = express();
 
@@ -25,9 +30,7 @@ app.configure(function(){
     app.use(express.cookieParser());
     app.use(express.session({
         secret: settings.cookieSecret,
-        store: new MongoStore({
-            db: settings.db
-        })
+        store: store
     }));
     app.use(app.router);
     app.use(express.static(path.join(__dirname, 'assets')));
