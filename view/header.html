@@ -8,8 +8,8 @@
     <% if(locals.user){%>
         var baseConfig = {
             username: '<%= locals.user.username %>',
-            tags: ['it','js','f2e'],
-            des: 'it男，前端开发、js'
+            tags: '<%= locals.user.tags %>',
+            des: '<%= locals.user.des %>'
         };
     <% }else{ %>
         var baseConfig = {

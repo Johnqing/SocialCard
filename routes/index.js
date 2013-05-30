@@ -142,15 +142,8 @@ module.exports = function(app){
                 if(err){
                     req.flash('error', err);
                     return res.redirect('/');
-                }
-                console.log(userInfo);
-                if(!userInfo.pos){
-                    userInfo.pos = 0;
-                }
-                if(!userInfo.controller){
-                    userInfo.controller = 0;
-                }
-                userInfo.username = userInfo.username ? userInfo.username : "姓名";
+                };
+                userInfo = userInfoUp(userInfo);
                 res.render('user',{
                     title:'主页',
                     user: userInfo,
@@ -161,7 +154,20 @@ module.exports = function(app){
                 });
             });
         });
+        //用户信息设置
+        function userInfoUp(userInfo){
+            if(!userInfo.pos){
+                userInfo.pos = 0;
+            }
+            if(!userInfo.controller){
+                userInfo.controller = 0;
+            }
 
+            userInfo.username = userInfo.username ? userInfo.username : "姓名";
+            userInfo.tags = userInfo.tags ? userInfo.tags : "";
+            userInfo.des = userInfo.des ? '-'+userInfo.des+'-' : "";
+            return userInfo;
+        }
     });
     app.post('/layoutPage', function(req, res){
         var data = {
@@ -191,9 +197,13 @@ module.exports = function(app){
             res.json({success: 1})
         });
     });
+    //存入变化
     app.post('/saveChange', function(req, res){
         var data = req.body;
         data.uid = req.session.user.uid;
+        if(data.tags){
+            data.tags = data.tags.split(' ');
+        }
         var layPos = new layoutPos(data);
         layPos.save(function(err){
             if(err){

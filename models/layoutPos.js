@@ -53,7 +53,7 @@ LayoutPos.get = function(uid, callback){
             collection.find(query).sort({
                 time: -1
             }).toArray(function(err, docs){
-                //console.log(docs[0]);
+                console.log(docs[0]);
                 mongodb.close();
                 if(err){
                     callback(err);

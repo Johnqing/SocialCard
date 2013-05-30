@@ -13,7 +13,7 @@ define(['tpm'], function(nTpl){
                         '</div>'+
                     '</div>';
         var Tag = '<div id="userpage-layout-tag-container">'+
-                        '<% for(var i=0; i<tags.length; i++){ %>'+
+                        '<% for(var i=0, tags = tags.split(" "); i<tags.length; i++){ %>'+
                         '<span><a href="/search?tag=<%= tags[i] %>"><%= tags[i] %></a></span>'+
                         '<% } %>'+
                    '</div>';

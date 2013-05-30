@@ -43,7 +43,7 @@ require(['jquery','ctlchange','jeditor','drag','controller'], function($,ntpl){
      * 自我简介
      */
     $('#information').editor({
-        defaultIframeContent:'sjdjsds',
+        defaultIframeContent: baseConfig['des'],
         ifWidth: 232,
         ifHeight: 158,
         menuObj: $('#informationSet'),
@@ -51,6 +51,7 @@ require(['jquery','ctlchange','jeditor','drag','controller'], function($,ntpl){
             var des = obj.html();
             baseConfig['des'] = des;
             renderCard();
+            $.post('/saveChange', { 'des': des });
         },
         menu:[
             {'type':'bold','name':'B'},
@@ -73,6 +74,7 @@ require(['jquery','ctlchange','jeditor','drag','controller'], function($,ntpl){
                 var des = $(e.target).html();
                 baseConfig['des'] = des;
                 renderCard();
+                $.post('/saveChange', { 'des': des });
             }
         }
     });
@@ -94,6 +96,7 @@ require(['jquery','ctlchange','jeditor','drag','controller'], function($,ntpl){
     $('[name="tags"]').bind('blur', function(){
         var tags = $(this).val().split(' ');
         tags = tags.length > 5 ? (tags.slice(0,5)) : tags;
+        tags = tags.join(' ');
         baseConfig['tags'] = tags;
         renderCard();
         $.post('/saveChange', { 'tags': tags });
