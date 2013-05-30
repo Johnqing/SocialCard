@@ -66,11 +66,12 @@ module.exports = function(app){
         var password = md5.update(req.body.password).digest('base64');
         //传参给user模块
         var newUser = new User({
-            name: req.body.username,
+            uid: req.body.username,
+            username: req.body.username,
             password: password
         });
         //查询数据库存在此用户名
-        User.get(newUser.name, function(err, user){
+        User.get(newUser.uid, function(err, user){
             if(user){
                 err = '用户已存在';
             }
@@ -137,30 +138,24 @@ module.exports = function(app){
                 req.flash('error', '该用户不存在！');
                 return res.redirect('/')
             }
-            layoutPos.get(user.name, function(err, postion){
-                console.log(postion);
+            layoutPos.get(user.uid, function(err, userInfo){
                 if(err){
                     req.flash('error', err);
                     return res.redirect('/');
                 }
-                if(!postion.pos){
-                    postion.pos = {
-                        pos: 0,
-                        controller: 0
-                    }
-                };
-                postion = postion.pos;
-                if(!postion.pos){
-                    postion.pos = 0;
+                console.log(userInfo);
+                if(!userInfo.pos){
+                    userInfo.pos = 0;
                 }
-                if(!postion.controller){
-                    postion.controller = 0;
+                if(!userInfo.controller){
+                    userInfo.controller = 0;
                 }
+                userInfo.username = userInfo.username ? userInfo.username : "姓名";
                 res.render('user',{
                     title:'主页',
-                    user: req.session.user,
-                    pos: postion.pos,
-                    controller: postion.controller,
+                    user: userInfo,
+                    pos: userInfo.pos,
+                    controller: userInfo.controller,
                     success: req.flash('success').toString(),
                     error: req.flash('error').toString()
                 });
@@ -170,7 +165,7 @@ module.exports = function(app){
     });
     app.post('/layoutPage', function(req, res){
         var data = {
-                username: req.session.user.name,
+                uid: req.session.user.uid,
                 pos: req.body
             },
             layPos = new layoutPos(data);
@@ -184,7 +179,7 @@ module.exports = function(app){
     });
     app.post('/controller', function(req, res){
         var data = {
-                name: req.session.user.name,
+                uid: req.session.user.uid,
                 controller: req.body
             },
             layPos = new layoutPos(data);
@@ -197,8 +192,9 @@ module.exports = function(app){
         });
     });
     app.post('/saveChange', function(req, res){
-        var data = req.body,
-            layPos = new layoutPos(data);
+        var data = req.body;
+        data.uid = req.session.user.uid;
+        var layPos = new layoutPos(data);
         layPos.save(function(err){
             if(err){
                 req.flash('error', err);

@@ -7,7 +7,7 @@
 var mongodb = require('./db');
 
 var User = function(user){
-    this.name = user.name;
+    this.uid = user.uid;
     this.password = user.password;
 }
 /**
@@ -17,7 +17,7 @@ var User = function(user){
 User.prototype = {
     save: function(callback){
         var user = {
-            name: this.name,
+            uid: this.uid,
             password: this.password
         }
         mongodb.open(function(err, db){
@@ -33,12 +33,12 @@ User.prototype = {
                  * 第一个参数是selector，第二个参数是选项，有unique（唯一索引）等mongoDB索引选项。
                  * ensureIndex先查找是否存在这个索引，如果不存在，则建立索引，因此不会出现重复建立的情况。
                  */
-                collection.ensureIndex('name', {
+                collection.ensureIndex('uid', {
                     unique: true
                 });
-
                 collection.insert(user, {safe: true}, function(err, user){
                     mongodb.close();
+                    console.log(err);
                     callback(err, user);
                 });
 
@@ -51,7 +51,7 @@ User.prototype = {
  * @param username
  * @param callback
  */
-User.get = function(username, callback){
+User.get = function(uid, callback){
     mongodb.open(function(err, db){
         if(err){return callback(err)};
 
@@ -62,7 +62,7 @@ User.get = function(username, callback){
             }
 
             collection.findOne({
-                name: username
+                uid: uid
             },function(err, doc){
                 mongodb.close();
                 if(doc){

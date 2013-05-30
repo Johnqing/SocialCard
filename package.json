@@ -12,5 +12,8 @@
     "mongodb": "*",
     "connect-mongo": "*",
     "connect-flash": "*"
+  },
+  "devDependencies": {
+    "grunt": "~0.4.1"
   }
 }
