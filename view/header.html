@@ -9,7 +9,7 @@
         var baseConfig = {
             username: '<%= locals.user.username %>',
             tags: '<%= locals.user.tags %>',
-            des: '<%= locals.user.des %>'
+            des: '<%- locals.user.des %>'
         };
     <% }else{ %>
         var baseConfig = {
