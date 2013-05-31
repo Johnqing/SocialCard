@@ -157,8 +157,9 @@ module.exports = function(app){
             });
         });
         //用户信息设置
-        function userInfoUp(userInfo){
-            console.log(userInfo);
+        function userInfoUp(userInfo) {
+            userInfo = userInfo || {};
+
             if(!userInfo.pos){
                 userInfo.pos = 0;
             }
@@ -169,6 +170,7 @@ module.exports = function(app){
             userInfo.username = userInfo.username ? userInfo.username : "姓名";
             userInfo.tags = userInfo.tags ? userInfo.tags : "";
             userInfo.des = userInfo.des ? userInfo.des : "";
+
             return userInfo;
         }
     });

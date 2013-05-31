@@ -35,6 +35,7 @@ LayoutPos.save = function(data, callback){
 };
 LayoutPos.get = function(uid, callback){
     LayoutModel.find({uid: uid}, function(err, doc){
+        //console.log(doc);
         callback(err, doc[0]);
     });
 }
