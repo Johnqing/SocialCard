@@ -7,4 +7,4 @@
  */
 var mongoose = require('mongoose')
     , settings = require('../setting');
-module.exports = mongoose.connect(settings.host, settings.db, settings.port);
+module.exports = mongoose.connect( settings.db );

@@ -7,7 +7,5 @@
  */
  module.exports = {
     cookieSecret: 'sns',
-    db: 'sns',
-    host: '127.0.0.1',
-    port: '27017'
+    db: 'mongodb://johnqing:liuqing@ds029267.mongolab.com:29267/socard'
  };
