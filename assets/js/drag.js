@@ -7,6 +7,11 @@ define(['jquery'], function($) {
         yStart: 0,
         yEnd: 300,
         callback: function(){}
+    },
+    bind = function(object, fun) {
+        return function(event) {
+            return fun.call(object, (event || win.event));
+        }
     };
     /**
      * @class
@@ -64,18 +69,16 @@ define(['jquery'], function($) {
         },
         start: function(ev){
             var self = this;
-            $(document).bind('mousemove', function(e){
-                self.move(e);
-            });
+            $(document).bind('mousemove', bind(self, self.Move));
             $(document).bind('mouseup', self.stop);
             if(self.IE){
                 //焦点丢失
-                self.target.bind("losecapture", self._fS);
+                self.target.bind("losecapture", self.stop);
                 //设置鼠标捕获
                 self.target.setCapture();
             }else{
                 //焦点丢失
-                $(window).bind("blur", self._fS);
+                $(window).bind("blur", self.stop);
                 //阻止默认动作
                 ev.preventDefault();
             }
@@ -84,14 +87,17 @@ define(['jquery'], function($) {
             var self = this;
             self.flag = false;
             //移除事件
-            $(document).unbind("mousemove", self._fM);
-            $(document).unbind("mouseup", self._fS);
+            $(document).unbind("mousemove", self.Move);
+            $(document).unbind("mouseup", self.stop);
             if(self.IE){
-                self.target.unbind("losecapture", self._fS);
+                self.target.unbind("losecapture", self.stop);
                 self.target.releaseCapture();
             }else{
-                $(window).unbind("blur", self._fS);
+                $(window).unbind("blur", self.stop);
             }
+        },
+        Move: function(ev){
+            this.move(ev);
         },
         move: function(e){
             var self = this;
