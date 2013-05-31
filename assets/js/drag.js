@@ -2,6 +2,8 @@ define(['jquery'], function($) {
     var defaultConfig = {
         drag: null,
         setArea: false,
+        stopX: false,
+        stopY: false,
         xStart: 0,
         xEnd: 300,
         yStart: 0,
@@ -38,8 +40,8 @@ define(['jquery'], function($) {
         this.backup = opts.backup;
         this.callback = opts.callback;
 
-        this.stopX = false;
-        this.stopY = false;
+        this.stopX = opts.stopX;
+        this.stopY = opts.stopY;
 
         this.pos = null;//计数器
         this.flag = false;//阀门
@@ -122,8 +124,8 @@ define(['jquery'], function($) {
             }else{
                 top = self.drag.offsetTop;
             }
-            self.top = top;
-            self.left = left;
+            self.top = self.pos.y = top;
+            self.left = self.pos.x = left;
             self.drag.css({
                 left: left,
                 top: top
