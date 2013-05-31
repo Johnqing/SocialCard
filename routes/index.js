@@ -205,7 +205,7 @@ module.exports = function(app){
         var data = req.body;
         data.uid = req.session.user.uid;
         if(data.des){
-            data.des = data.des.replace(/\'|\"/ig,"&quot;");
+            data.des = data.des.replace(/\'/ig,"&quot;");
         }
         layoutPos.save(data, function(err){
             if(err){
