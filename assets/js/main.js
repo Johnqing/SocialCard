@@ -67,6 +67,8 @@ require(['jquery','ctlchange','jeditor','drag','controller'], function($,ntpl){
             var self = this;
             self.keyup = function(e){
                 var des = $(e.target).html();
+                des = des.replace(/\'/ig,"&quot;");
+                console.log(des);
                 baseConfig['des'] = des;
                 renderCard();
             };

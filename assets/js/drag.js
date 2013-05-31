@@ -7,7 +7,7 @@ define(['jquery'], function($) {
         yStart: 0,
         yEnd: 300,
         callback: function(){}
-    }
+    };
     /**
      * @class
      * @param  {[Object]} opts 参数
@@ -40,6 +40,7 @@ define(['jquery'], function($) {
         this.flag = false;//阀门
         this.oldX = 0;
         this.oldY = 0;
+        this.IE = !-[1,];
 
         this.left = 0;
         this.top = 0;
@@ -58,36 +59,60 @@ define(['jquery'], function($) {
                 self.pos = self.getMousePos(e);
                 self.oldX = self.pos.x - $(this).offset().left;
                 self.oldY = self.pos.y - $(this).offset().top;
+                self.start(e);
             });
-            $('body').bind('mousemove',  function(e){
+        },
+        start: function(ev){
+            var self = this;
+            $(document).bind('mousemove', function(e){
                 self.move(e);
             });
-            $('body').bind('mouseup',  function(){
-                self.flag = false;
-            });
+            $(document).bind('mouseup', self.stop);
+            if(self.IE){
+                //焦点丢失
+                self.target.bind("losecapture", self._fS);
+                //设置鼠标捕获
+                self.target.setCapture();
+            }else{
+                //焦点丢失
+                $(window).bind("blur", self._fS);
+                //阻止默认动作
+                ev.preventDefault();
+            }
+        },
+        stop: function(){
+            var self = this;
+            self.flag = false;
+            //移除事件
+            $(document).unbind("mousemove", self._fM);
+            $(document).unbind("mouseup", self._fS);
+            if(self.IE){
+                self.target.unbind("losecapture", self._fS);
+                self.target.releaseCapture();
+            }else{
+                $(window).unbind("blur", self._fS);
+            }
         },
         move: function(e){
             var self = this;
-            //self.stopSlect();
             //阀门
-            if(self.flag){
-                self.pos = self.getMousePos(e);
-                self.areaBlock();
-                self.cssRules();
-                self.callback.call(this);
-            }
+            if(!self.flag){return}
+            self.pos = self.getMousePos(e);
+            self.areaBlock();
+            self.cssRules(e);
+            self.callback.call(self);
         },
-        cssRules: function(){
+        cssRules: function(ev){
             var self = this,
                 left = null,
                 top = null;
             if(!self.stopX){
-                left = self.pos.x - self.oldX;
+                left = ev.clientX - self.oldX;
             }else{
                 left = self.drag.offsetLeft;
             }
             if(!self.stopY){
-                top = self.pos.y - self.oldY;
+                top = ev.clientY - self.oldY;
             }else{
                 top = self.drag.offsetTop;
             }
@@ -117,7 +142,7 @@ define(['jquery'], function($) {
                     || self.pos.x > (self.xEnd + self.drag.offsetWidth)
                     || self.pos.y < self.yStart
                     || (self.yEnd + self.drag.offsetHeight) < self.pos.y){
-                    self.flag=false;
+                    self.flag = false;
                 }
             }
         },
@@ -129,7 +154,7 @@ define(['jquery'], function($) {
         getMousePos: function (e){
             var bdy = $('body')[0];
             if(e.pageX || e.pageY){
-                 return {x:e.pageX, y:e.pageY};
+                return {x:e.pageX, y:e.pageY};
             }
             return {
                 x:e.clientX + bdy.scrollLeft - bdy.clientLeft,
@@ -137,8 +162,7 @@ define(['jquery'], function($) {
             };
         },
         stopSlect: function(){
-            var win = window;
-            win.getSelection ? win.getSelection().removeAllRanges() : win.document.selection.empty();
+            return false;
         }
     }
     /**

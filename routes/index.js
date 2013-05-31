@@ -145,6 +145,7 @@ module.exports = function(app){
                     req.flash('error', err);
                     return res.redirect('/');
                 };
+                console.log(userInfo);
                 userInfo = userInfoUp(userInfo);
                 res.render('user',{
                     title:'主页',
@@ -167,10 +168,9 @@ module.exports = function(app){
                 userInfo.controller = 0;
             }
 
-            userInfo.username = userInfo.username ? userInfo.username : "姓名";
-            userInfo.tags = userInfo.tags ? userInfo.tags : "";
-            userInfo.des = userInfo.des ? userInfo.des : "";
-
+            userInfo.username = userInfo.username || "姓名";
+            userInfo.tags = userInfo.tags || "";
+            userInfo.des = userInfo.des || "";
             return userInfo;
         }
     });
@@ -204,8 +204,8 @@ module.exports = function(app){
     app.post('/saveChange', function(req, res){
         var data = req.body;
         data.uid = req.session.user.uid;
-        if(data.tags){
-            data.tags = data.tags.split(' ');
+        if(data.des){
+            data.des = data.des.replace(/\'|\"/ig,"&quot;");
         }
         layoutPos.save(data, function(err){
             if(err){
