@@ -135,6 +135,7 @@ module.exports = function(app){
     });
     //user
     app.get('/:user', function(req, res){
+        console.log('1'+req.params.user);
         User.get(req.params.user, function(err, user){
             if(!user){
                 req.flash('error', '该用户不存在！');
@@ -145,7 +146,6 @@ module.exports = function(app){
                     req.flash('error', err);
                     return res.redirect('/');
                 };
-                console.log(userInfo);
                 userInfo = userInfoUp(userInfo);
                 res.render('user',{
                     title:'主页',
