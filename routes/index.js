@@ -121,8 +121,8 @@ module.exports = function(app){
             }
             //登录成功，记录session并跳回首页
             req.session.user = user;
-            req.flash('success', '登录成功！');
-            res.redirect('/');
+            //req.flash('success', '登录成功！');
+            res.redirect('/'+user.uid);
         });
 
     });
@@ -140,6 +140,7 @@ module.exports = function(app){
                 req.flash('error', '该用户不存在！');
                 return res.redirect('/')
             }
+
             layoutPos.get(user.uid, function(err, userInfo){
                 if(err){
                     req.flash('error', err);

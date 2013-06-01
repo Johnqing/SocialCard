@@ -34,7 +34,7 @@ User.save = function(user, callback){
  * @param callback
  */
 User.get = function(uid, callback){
-    UserModel.findOne({uid: uid}, 'uid', function(err, doc){
+    UserModel.findOne({uid: uid}, function(err, doc){
         callback(err, doc);
     });
 };

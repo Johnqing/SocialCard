@@ -1,7 +1,7 @@
 <%- include header.html %>
 <div class="main">
     <%- include card.html %>
-    <% if(!locals.user){%>
+    <% if(locals.user){%>
         <%- include controller.html %>
     <% } %>
 </div>
