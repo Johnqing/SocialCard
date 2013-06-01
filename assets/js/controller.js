@@ -1,4 +1,4 @@
-define(['jquery','ctlchange'], function($, renderCard){
+define(['jquery','ctlchange','drag'], function($, renderCard){
     if($('[data-type="controller"]').length<=0){return;}
     var layout = $('[data-type="layout"]'),
         controller = $('[data-type="controller"]'),

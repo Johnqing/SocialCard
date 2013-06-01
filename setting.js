@@ -7,6 +7,6 @@
  */
  module.exports = {
     cookieSecret: 'sns',
-//    db: 'mongodb://127.0.0.1:27017/socard'
-     db: 'mongodb://johnqing:liuqing@dharma.mongohq.com:10007/gome'
+    db: 'mongodb://127.0.0.1:27017/socard'
+     //db: 'mongodb://johnqing:liuqing@dharma.mongohq.com:10007/gome'
  };

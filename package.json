@@ -12,7 +12,8 @@
     "connect": "*",
     "express-mongoose": "*",
     "session-mongoose": "*",
-    "connect-flash": "*"
+    "connect-flash": "*",
+    "formidable": "*"
   },
   "devDependencies": {
     "grunt": "~0.4.1"
