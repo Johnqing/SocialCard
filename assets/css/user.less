@@ -1,0 +1,101 @@
+/**
+* @ 圆角
+* @ type{String:top,right,bottom,left;}
+*/
+.radius (@t:3px,@r:3px,@b:3px,@l:3px){
+  -moz-border-radius:@t @r @b @l;
+  -webkit-border-radius:@t @r @b @l;
+  border-radius:@t @r @b @l;
+}
+/**
+* @ 渐变色
+* @ type{String:start-color,end-color}
+*/
+.gradual-change(@s:#f8f8f8,@e:#ebebeb){
+  background-image: -moz-linear-gradient(top, @s, @e); /* Firefox */
+  background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0, @s), color-stop(1, @e)); /* Saf4+, Chrome */
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr=@s, endColorstr=@e, GradientType='0'); /* IE*/
+}
+/**
+* @ 阴影
+* @ type{String:x坐标,y坐标,阴影长度,阴影颜色}
+*/
+.boxShadow(@x:0,@y:0,@blur:1px,@color:#000){
+  -moz-box-shadow: @arguments;
+  -webkit-box-shadow: @arguments;
+  box-shadow: @arguments;
+}
+/**
+* @ 触发haslayout
+* @ ie使用zoom
+*/
+.haslayout(){
+  overflow: hidden;
+  *zoom:1;
+}
+/**
+* @ 背景图
+* @ type{String:xxx.jpg;}
+*/
+.bgImg(@url){
+  background-image:url('i/@{url}');
+}
+/**
+* @ 定位
+* @ type{String:top,left,方式;}
+*/
+.position(@t:0,@l:0,@pos:relative){
+  position:@pos;
+  top: @t;
+  left: @l;
+}
+/**
+* @透明度
+* @type{width,float}
+*/
+.opacity(@n:50){
+  filter: alpha(opacity=@n);
+  -moz-opacity:@n/100;
+  opacity: @n/100;
+}
+/**
+* @英文自动折行
+*/
+.wordBreak(){
+  word-break:break-all;
+  word-wrap:break-word;
+  overflow:hidden;
+}
+/**
+* @文字截断
+*/
+.textOverflow{
+  white-space:nowrap;
+  overflow:hidden;
+  text-overflow:ellipsis;
+}
+/**
+* @rgba
+* @type{String r,g,b,a}
+*/
+.bgrgba(@r, @g, @b, @a){
+  background:rgba(@r, @g, @b, @a);
+/*兼容ie*/
+  @cl:argb(rgba(@r, @g, @b, @a));
+  filter:progid:DXImageTransform.Microsoft.gradient(startColorstr=@cl,endColorstr=@cl);
+}
+/**
+* @模块
+* @type{width,float}
+*/
+.module(@w,@fl){
+  width:@w;
+  float:@fl;
+}
+
+body{
+  background:#66a8e5 url(../images/apollo_bg.jpg) center top no-repeat;
+}
+.main{
+  height: 100%;
+}

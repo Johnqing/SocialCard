@@ -22,7 +22,7 @@ var loginChect = {
     notLogin: function(req, res, next){
         if(req.session.user){
             req.flash('error', '已经登录!');
-            return res.redirect('/');
+            return res.redirect('/'+req.session.user.uid);
         }
         next();
     },
@@ -50,7 +50,7 @@ module.exports = function(app){
     app.post('/', function(req, res){
         if(req.body['password-repeat'] != req.body['password']){
             req.flash('error','两次输入的口令不一致');
-            return res.redirect('/reg');
+            return res.redirect('/');
         }
         //密码加密
         var md5 = crypto.createHash('md5');
@@ -69,7 +69,7 @@ module.exports = function(app){
             }
             if(err){
                 req.flash('error', err);
-                return res.redirect('/reg');
+                return res.redirect('/');
             }
 
             User.save(newUser, function(err){
@@ -80,7 +80,7 @@ module.exports = function(app){
                 //session里储存用户名
                 req.session.user = newUser;
                 req.flash('success','注册成功');
-                res.redirect('/');
+                res.redirect('/'+newUser.uid);
             });
         });
     });
@@ -137,6 +137,7 @@ module.exports = function(app){
                     req.flash('error', err);
                     return res.redirect('/');
                 }
+                console.log(req.session.user);
                 userInfo = userInfoUp(userInfo);
                 res.render('user',{
                     title:'主页',
