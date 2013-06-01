@@ -1,0 +1,100 @@
+/**
+* @ 圆角
+* @ type{String:top,right,bottom,left;}
+*/
+/**
+* @ 渐变色
+* @ type{String:start-color,end-color}
+*/
+/**
+* @ 阴影
+* @ type{String:x坐标,y坐标,阴影长度,阴影颜色}
+*/
+/**
+* @ 触发haslayout
+* @ ie使用zoom
+*/
+/**
+* @ 背景图
+* @ type{String:xxx.jpg;}
+*/
+/**
+* @ 定位
+* @ type{String:top,left,方式;}
+*/
+/**
+* @透明度
+* @type{width,float}
+*/
+/**
+* @英文自动折行
+*/
+/**
+* @文字截断
+*/
+.textOverflow {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+/**
+* @rgba
+* @type{String r,g,b,a}
+*/
+/**
+* @模块
+* @type{width,float}
+*/
+body {
+  background: url("../images/profiles-collage.jpg") no-repeat center 30px;
+}
+#reg {
+  position: absolute;
+  top: 20%;
+  left: 19%;
+  width: 350px;
+  padding: 0 20px 20px 20px;
+  background: rgba(255, 255, 255, 0.95);
+  /*兼容ie*/
+
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr=#f2ffffff, endColorstr=#f2ffffff);
+}
+#reg h1 {
+  margin-bottom: 15px;
+  font-size: 5rem;
+  font-family: tahoma;
+}
+#reg h1 strong {
+  font-size: 4.5rem;
+  color: #f60;
+}
+#reg .inp {
+  padding: 5px;
+}
+#reg .inp strong {
+  display: inline-block;
+  width: 70px;
+  color: #444;
+}
+#reg .inp input {
+  -moz-border-radius: 3px 3px 3px 3px;
+  -webkit-border-radius: 3px 3px 3px 3px;
+  border-radius: 3px 3px 3px 3px;
+  border: 1px solid #ddd;
+  padding: 5px;
+  width: 180px;
+}
+#reg .sub-btn {
+  padding-top: 10px;
+  padding-left: 70px;
+}
+#reg .sub-btn input {
+  -moz-border-radius: 3px 3px 3px 3px;
+  -webkit-border-radius: 3px 3px 3px 3px;
+  border-radius: 3px 3px 3px 3px;
+  border: 0 none;
+  padding: 8px 15px;
+  background: #f60;
+  font-weight: bold;
+  color: #fff;
+}

@@ -17,7 +17,7 @@ var app = express();
 //所有环境下
 app.configure(function(){
     //设置端口
-    app.set('port', process.env.PORT || 3000);
+    app.set('port', process.env.PORT || 80);
     app.set('views', __dirname + '/view');
     app.set('view engine', 'html');
     app.engine('.html', require('ejs').__express);
