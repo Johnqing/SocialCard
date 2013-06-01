@@ -1,3 +1,12 @@
 <%- include header.html %>
-<div class="main">首页设计中。。请注册查看用户中心！</div>
+<link rel="stylesheet" href="/css/reg.css"/>
+<div id="reg">
+    <h1>Go <strong>Me</strong></h1>
+    <form method="post">
+        <div class="inp username"><strong>用户名：</strong><input type="text" name="username" /></div>
+        <div class="inp pwd"><strong>密码：</strong><input type="password" name="password" /></div>
+        <div class="inp rpwd"><strong>确认密码：</strong><input type="password" name="password-repeat" /></div>
+        <div class="sub-btn"><input type="submit" value="注册" /></div>
+    </form>
+</div>
 <%- include footer.html %>

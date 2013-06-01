@@ -1,7 +1,12 @@
 <%- include header.html %>
-<form method="post">
-用户名：<input type="text" name="username" /><br />
-密码： <input type="password" name="password" /><br />
-        <input type="submit" value="登录" />
-</form>
+<link rel="stylesheet" href="/css/login.css"/>
+<div id="login">
+    <h3>Welcome!</h3>
+    <form method="post">
+        <div class="inp username"><strong>用户名：</strong><input type="text" name="username" /></div>
+        <div class="inp pwd"><strong>密码：</strong><input type="password" name="password" /></div>
+        <div class="sub-btn"><input type="submit" value="登录" /></div>
+    </form>
+</div>
+
 <%- include footer.html %>

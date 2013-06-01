@@ -37,6 +37,7 @@ var loginChect = {
 
 module.exports = function(app){
     //index
+    app.get('/', loginChect.notLogin);
     app.get('/', function(req, res){
         res.render('index',{
             title:'主页',
@@ -45,18 +46,8 @@ module.exports = function(app){
             error: req.flash('error').toString()
         });
     });
-    //    req
-    app.get('/reg', loginChect.notLogin);
-    app.get('/reg', function(req, res){
-           res.render('reg', {
-               title:'注册',
-               user: req.session.user,
-               success: req.flash('success').toString(),
-               error: req.flash('error').toString()
-           })
-    });
-    app.post('/reg', loginChect.notLogin);
-    app.post('/reg', function(req, res){
+    app.post('/', loginChect.notLogin);
+    app.post('/', function(req, res){
         if(req.body['password-repeat'] != req.body['password']){
             req.flash('error','两次输入的口令不一致');
             return res.redirect('/reg');
