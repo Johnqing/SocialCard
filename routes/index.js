@@ -149,9 +149,8 @@ module.exports = function(app){
                 userInfo = userInfoUp(userInfo);
                 res.render('user',{
                     title:'主页',
-                    user: userInfo,
-                    pos: userInfo.pos,
-                    controller: userInfo.controller,
+                    user: req.session.user,
+                    pos: userInfo,
                     success: req.flash('success').toString(),
                     error: req.flash('error').toString()
                 });

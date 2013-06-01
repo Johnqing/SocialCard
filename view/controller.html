@@ -1,4 +1,4 @@
-<div id="controller" data-type="controller" style="left:<%= controller.left %>px;top:<%= controller.top %>px">
+<div id="controller" data-type="controller" style="left:<%= pos.controller.left %>px;top:<%= pos.controller.top %>px">
     <!--controller drag block-->
     <div id="controller-drag">
         <i id="drag-minimize">x</i>
@@ -25,11 +25,11 @@
                 </div>
                 <div class="controller-section">
                     <label for="username">姓名</label>
-                    <input type="text" name="username" class="constroller-inp" value="<%= locals.user.username %>"/>
+                    <input type="text" name="username" class="constroller-inp" value="<%= locals.pos.username %>"/>
                 </div>
                 <div class="controller-section">
                     <label for="tags">标签</label>
-                    <input type="text" name="tags" class="constroller-inp" value="<%= locals.user.tags %>"/>
+                    <input type="text" name="tags" class="constroller-inp" value="<%= locals.pos.tags %>"/>
                 </div>
                 <div class="controller-section">
                     <label for="information">简介</label>
