@@ -176,10 +176,9 @@ module.exports = function(app){
     });
     app.post('/layoutPage', function(req, res){
         var data = {
-            uid: req.session.user.uid,
             pos: req.body
         };
-        layoutPos.save(data, function(err){
+        layoutPos.save(req.session.user.uid, data, function(err){
             if(err){
                 req.flash('error', err);
                 return res.json({error: err});
@@ -189,10 +188,9 @@ module.exports = function(app){
     });
     app.post('/controller', function(req, res){
         var data = {
-            uid: req.session.user.uid,
             controller: req.body
         };
-        layoutPos.save(data, function(err){
+        layoutPos.save(req.session.user.uid, data, function(err){
             if(err){
                 req.flash('error', err);
                 return res.json({error: err});
@@ -203,11 +201,10 @@ module.exports = function(app){
     //存入变化
     app.post('/saveChange', function(req, res){
         var data = req.body;
-        data.uid = req.session.user.uid;
         if(data.des){
             data.des = data.des.replace(/\'/ig,"&quot;");
         }
-        layoutPos.save(data, function(err){
+        layoutPos.save(req.session.user.uid, data, function(err){
             if(err){
                 req.flash('error', err);
                 return res.json({error: err});
