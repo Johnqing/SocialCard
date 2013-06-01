@@ -21,5 +21,9 @@ define(['tpm'], function(nTpl){
         tplHTML= Name + Tag + Des;
         return nTpl.tpl(tplHTML, data);
     };
-    return tpl;
+    function renderCard(){
+        var ntpl = tpl(baseConfig);
+        $('#layout-page').html(ntpl);
+    }
+    return renderCard;
 });
