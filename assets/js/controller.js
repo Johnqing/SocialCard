@@ -1,4 +1,4 @@
-define(['jquery','ctlchange','drag'], function($, renderCard){
+define(['jquery','ctlchange','drag','colorPicker'], function($, renderCard){
     if($('[data-type="controller"]').length<=0){return;}
     var layout = $('[data-type="layout"]'),
         controller = $('[data-type="controller"]'),
@@ -6,7 +6,10 @@ define(['jquery','ctlchange','drag'], function($, renderCard){
         contCon = $('.constroller-con');
     //一级分类切换
     contTitle.click(function(){
-        $(this).next(".constroller-con").slideToggle("slow").siblings(".constroller-con:visible").slideUp("slow");
+        var conNode = $(this).next(".constroller-con");
+        conNode.slideToggle("slow").siblings(".constroller-con:visible").slideUp("slow");
+        var h = conNode.find('li:eq(0)').height();
+        conNode.find('ul').height(h);
     });
     //二级切换
     var subCont = contCon.find('.controller-panel-nav');
@@ -20,8 +23,9 @@ define(['jquery','ctlchange','drag'], function($, renderCard){
     });
     //点击头部切换
     $('.controller-container-header').bind('click',function(){
-        var oUL = $(this).parents('ul');
-        oUL.css("position","relative").animate({left: 0, height: 120}, "slow");
+        var oUL = $(this).parents('ul'),
+            firstLiItem = oUL.find('li:eq(0)');
+        oUL.css("position","relative").animate({left: 0, height: firstLiItem.height()}, "slow");
     });
     //
 
@@ -97,5 +101,19 @@ define(['jquery','ctlchange','drag'], function($, renderCard){
         baseConfig['tags'] = tags;
         renderCard();
         $.post('/saveChange', { 'tags': tags });
+    });
+    //颜色控制
+    $('#controller-design-colors a').colorPicker({
+        callback: function(obj, color){
+            obj.css({
+                'background-color': color
+            });
+            var id = obj.attr('data-id') !== 'body' ? '#'+obj.attr('data-id') : 'body';
+            if(id === 'body' || id === '#layout-page'){
+                $(id).css({'background-color': color});
+                return;
+            }
+            $(id).css({'color': color});
+        }
     });
 });

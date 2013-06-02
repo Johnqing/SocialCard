@@ -29,16 +29,12 @@ var LayoutModel = mongoose.model('layout');
 var LayoutPos = {};
 
 LayoutPos.save = function(uid, data, callback){
-    //data.uid = uid;
-    console.log(uid);
-    console.log(data);
     LayoutModel.update({uid: uid}, {$set: data}, {upsert: true, multi: false}, function(err, doc){
        callback(err, doc);
     });
 };
 LayoutPos.get = function(uid, callback){
     LayoutModel.find({uid: uid}, function(err, doc){
-        console.log(doc);
         callback(err, doc[0]);
     });
 }

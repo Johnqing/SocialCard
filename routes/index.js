@@ -29,7 +29,7 @@ var loginChect = {
     login: function(req, res, next){
         if(!req.session.user){
             req.flash('error', '未登录!');
-            return res.redirect('/');
+            return res.redirect('/login');
         }
         next();
     }
@@ -63,7 +63,7 @@ module.exports = function(app){
         };
         //查询数据库存在此用户名
         User.get(newUser.uid, function(err, user){
-            console.log(user);
+            //console.log(user);
             if(user){
                 err = '用户已存在';
             }
@@ -96,9 +96,11 @@ module.exports = function(app){
     });
     app.post('/login', loginChect.notLogin);
     app.post('/login',function(req, res){
-        var md5 = crypto.createHash('md5'),
-            password = md5.update(req.body.password).digest('base64');
-
+        var md5 = crypto.createHash('md5');
+        var sUser = {
+            uid: req.body.username,
+            password: md5.update(req.body.password).digest('base64')
+        };
         User.get(req.body.username, function(err, user){
             //如果用户名不存在，通过flash记录信息，并调整回去显示错误信息
             if(!user){
@@ -106,14 +108,14 @@ module.exports = function(app){
                 return res.redirect('/login');
             }
             //密码错误
-            if(user.password != password){
+            if(user.password != sUser.password){
                 req.flash('error', '密码错误!');
                 return res.redirect('/login');
             }
             //登录成功，记录session并跳回首页
-            req.session.user = user;
-            //req.flash('success', '登录成功！');
-            res.redirect('/'+user.uid);
+            req.session.user = sUser;
+            req.flash('success', '登录成功！');
+            res.redirect('/'+sUser.uid);
         });
 
     });
@@ -122,22 +124,23 @@ module.exports = function(app){
     app.get('/logout',function(req, res){
         req.session.user = null;
         req.flash('success', '退出成功!');
-        res.redirect('/');
+        res.redirect('/login');
     });
     //user
     app.get('/:user', function(req, res){
+        console.log('user');
+        console.log(req.session);
         User.get(req.params.user, function(err, user){
             if(!user){
                 req.flash('error', '该用户不存在！');
                 return res.redirect('/')
             }
-
             layoutPos.get(user.uid, function(err, userInfo){
                 if(err){
                     req.flash('error', err);
                     return res.redirect('/');
                 }
-                console.log(req.session.user);
+                //console.log(user);
                 userInfo = userInfoUp(userInfo);
                 res.render('user',{
                     title:'主页',
