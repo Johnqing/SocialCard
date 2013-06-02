@@ -1,0 +1,20 @@
+.controller-section-header {
+  margin-bottom: 10px;
+  font-weight: bold;
+}
+.controller-section-list {
+  overflow: hidden;
+  *zoom: 1;
+}
+.controller-section-list div {
+  float: left;
+  margin: 0 6px 15px 0;
+  width: 70px;
+}
+.controller-section-list div a {
+  display: block;
+  margin-bottom: 5px;
+  border: 2px solid #4E575D;
+  height: 35px;
+  color: #7FBE25;
+}
