@@ -6,12 +6,6 @@ var express = require('express')
   , settings = require('./setting')
   , flash = require('connect-flash');
 
-var connect = require('connect');
-var SessionStore = require("session-mongoose")(connect);
-var store = new SessionStore({
-    db: settings.db
-});
-
 var app = express();
 
 //所有环境下
@@ -30,7 +24,8 @@ app.configure(function(){
     app.use(express.cookieParser());
     app.use(express.session({
         secret: settings.cookieSecret,
-        store: store
+        cookie: {maxAge: 900000}
+        //store: store
     }));
     app.use(app.router);
     app.use(express.static(path.join(__dirname, 'assets')));
