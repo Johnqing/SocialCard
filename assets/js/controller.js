@@ -114,6 +114,21 @@ define(['jquery','ctlchange','tpm','drag','colorPicker','tab'], function($, rend
                 return;
             }
             $(id).css({'color': color});
+        },
+        opacityCallBack: function(obj, text){
+           var id = obj.attr('data-id') !== 'body' ? '#'+obj.attr('data-id') : 'body';
+           if(id === 'body' || id === '#layout-page'){
+               if(navigator.userAgent.indexOf("MSIE 6.0") > 0 || navigator.userAgent.indexOf("MSIE 7.0") > 0
+                   || navigator.userAgent.indexOf("MSIE 8.0") > 0){
+                    $(id).css({
+                        'background-color': 'none',
+                        'filter': 'progid:DXImageTransform.Microsoft.gradient(startColorstr='+ text.hex +',endColorstr='+ text.hex +');'
+                    });
+                   return;
+               }
+               $(id).css({'background-color': text.rgba});
+               return;
+           }
         }
     });
     //字体

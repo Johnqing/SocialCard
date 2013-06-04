@@ -1,6 +1,17 @@
+/**
+* @ 圆角
+* @ type{String:top,right,bottom,left;}
+*/
+.radius (@t:3px,@r:3px,@b:3px,@l:3px){
+  -moz-border-radius:@t @r @b @l;
+  -webkit-border-radius:@t @r @b @l;
+  border-radius:@t @r @b @l;
+}
 .color-picker{
     display: none;
+    border: 1px solid #eee;
     width: 232px;
+    background: #000;
     ul{
         overflow: hidden;
         *zoom:1;
@@ -15,4 +26,21 @@
             cursor: pointer;
         }
     }
+  .color-op-box{
+    clear: both;
+    margin: 5px;
+    border:1px solid #4e575d;
+    position: relative;
+    width: 115px;
+    height: 5px;
+    .color-op-bar{
+      position: absolute;
+      top: -2px;
+      left: 100px;
+      width: 15px;
+      height: 8px;
+      background: #4e575d;
+      .radius();
+    }
+  }
 }
