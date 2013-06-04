@@ -1,4 +1,4 @@
-define(['jquery','ctlchange','drag','colorPicker'], function($, renderCard){
+define(['jquery','ctlchange','tpm','drag','colorPicker','tab'], function($, renderCard, Ntpl){
     if($('[data-type="controller"]').length<=0){return;}
     var layout = $('[data-type="layout"]'),
         controller = $('[data-type="controller"]'),
@@ -116,4 +116,62 @@ define(['jquery','ctlchange','drag','colorPicker'], function($, renderCard){
             $(id).css({'color': color});
         }
     });
+    //字体
+    $('#fontSet').tab({
+        target: '.tab-box span',
+        contClass: 'tab-con'
+    });
+    //字体渲染
+    var fontFamily = {
+        tpl: function(){
+            var tpl = '<% for(var i=0; i<data.length; i++){ %>'+
+                    '<div class="familyName">'+
+                        '<span><%= data[i].name %></span>'+
+                        '<dl>'+
+                        '<% for(var j=0, family=data[i].family; j<family.length; j++){ %>'+
+                            '<dd class="<%= family[j].type %>"><%= family[j].name %></dd>'+
+                        '<% } %>'+
+                        '</dl>'+
+                    '</div>'+
+                '<% } %>';
+            return tpl;
+        },
+        data: [
+            {
+                name: '姓名',
+                family: [
+                    {
+                        name: '宋体',
+                        type: '宋体'
+                    },
+                    {
+                        name: '宋体+粗',
+                        type: '宋体 bold'
+                    },
+                    {
+                        name: '微软雅黑',
+                        type: '微软雅黑'
+                    },
+                    {
+                        name: 'Arial',
+                        type: 'Arial'
+                    },
+                    {
+                        name:  'Arial Bold',
+                        type: 'Arial bold'
+                    },
+                    {
+                        name: 'Arial Bold Italic',
+                        type: 'Arial bold italic'
+                    },
+                    {
+                        name: 'Arial Italic',
+                        type: 'Arial italic'
+                    }
+                ]
+            }
+        ]
+    };
+    var familyTpl = Ntpl.tpl(fontFamily.tpl(),fontFamily);
+    $('#fontFamily').html(familyTpl);
 });

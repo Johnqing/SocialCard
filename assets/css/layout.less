@@ -182,6 +182,62 @@
       cursor: pointer;
     }
   }
+  .tab-box{
+    span{
+      display: inline-block;
+      padding: 8px 10px;
+      font-size: 12px;
+      color: #959A9E;
+      text-align: center;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      background: #393F44;
+      cursor: pointer;
+    }
+    .tab-box-left{
+      margin-right: 1px;
+      width: 95px;
+      .radius(5px,0,0,5px);
+    }
+    .tab-box-right{
+      width: 94px;
+      .radius(0,5px,5px,0);
+    }
+  }
+  #fontFamily{
+    .familyName{
+      overflow: hidden;
+      *zoom: 1;
+      span, dl{
+        float: left;
+      }
+      dl{
+
+      }
+    }
+  }
+  .scroll-bar-box{
+    position: relative;
+    margin: 10px auto;
+    height: 200px;
+    overflow: hidden;
+    background: #aaa;
+    .scroll-con{
+      width: 220px;
+      position: absolute;
+      top:0;
+      left: 0;
+    }
+    .scroll-bar{
+      position: absolute;
+      top: 0;
+      right:0;
+      width: 6px;
+      height: 15px;
+      background:#666;
+    }
+  }
+
 }
 .constroller-con{
   ul{
