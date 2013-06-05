@@ -1,15 +1,3 @@
-/**
- * 重写路由
- * app.get 是在用户访问当前页面的时候，展示的数据
- * app.post 是用户操作
- * render 是渲染模板函数
- * @param app
- */
-/**
- * crypto 是 Node.js 的一个核心模块，功能是加密并生成各种散列，使用它之前
- * 首先要声明 var crypto = require('crypto')。我们代码中使用它计算了密码的散列值。
- * user.js则实现如何从数据库中存和取用户名和密码。
- */
 var crypto = require('crypto')
     , User = require('../models/user')
     , layoutPos = require('../models/layoutPos');
@@ -63,7 +51,6 @@ module.exports = function(app){
         };
         //查询数据库存在此用户名
         User.get(newUser.uid, function(err, user){
-            //console.log(user);
             if(user){
                 err = '用户已存在';
             }
@@ -128,8 +115,6 @@ module.exports = function(app){
     });
     //user
     app.get('/:user', function(req, res){
-        console.log('user');
-        console.log(req.session);
         User.get(req.params.user, function(err, user){
             if(!user){
                 req.flash('error', '该用户不存在！');
@@ -140,7 +125,6 @@ module.exports = function(app){
                     req.flash('error', err);
                     return res.redirect('/');
                 }
-                //console.log(user);
                 userInfo = userInfoUp(userInfo);
                 res.render('user',{
                     title:'主页',

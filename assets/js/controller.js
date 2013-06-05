@@ -27,8 +27,19 @@ define(['jquery','ctlchange','tpm','drag','colorPicker','tab'], function($, rend
             firstLiItem = oUL.find('li:eq(0)');
         oUL.css("position","relative").animate({left: 0, height: firstLiItem.height()}, "slow");
     });
-    //
-
+    /**
+     * 结构层
+     */
+    layout.drag({
+        setArea: true,
+        xEnd: $('body').width() - layout.innerWidth(),
+        yStart : 32,
+        yEnd:  $('body').height() - layout.innerHeight(),
+        drag: layout,
+        callback: function(){
+            $.post("/layoutPage", {left: this.left,top: this.top});
+        }
+    });
     /**
      * 控制面板
      */

@@ -1,5 +1,15 @@
 <%- include header.html %>
 <link rel="stylesheet" href="/css/user.css"/>
+<style type="text/css">
+    #controller{
+        left:<%= pos.controller.left %>px;
+        top:<%= pos.controller.top %>px;
+    }
+    #layout-page{
+        left:<%= pos.pos.left %>px;
+        top:<%= pos.pos.top %>px;
+    }
+</style>
 <div class="main">
     <%- include card.html %>
     <% if(locals.user){%>
