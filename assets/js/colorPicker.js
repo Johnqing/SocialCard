@@ -45,7 +45,8 @@ define(['jquery','tpm','drag'], function($, Ntpl){
         this.opacityCallBack = opts.opacityCallBack;
 
         this.cp = null;
-        this.color = "#000000"
+        this.color = "#000000";
+        this.op = 1;
 
         this.init();
     };
@@ -81,7 +82,7 @@ define(['jquery','tpm','drag'], function($, Ntpl){
                 oTarget.parentNode.tagName.toUpperCase() === "LI" && (oTarget = oTarget.parentNode);
                 if(oTarget.tagName.toUpperCase() === "LI") {
                     self.color = $(oTarget).attr('data-color');
-                    self.callback(self.target, self.color);
+                    self.callback(self.target, self.colorFormat());
                 }
                 self.closeColorPicker();
             });
@@ -98,13 +99,18 @@ define(['jquery','tpm','drag'], function($, Ntpl){
                 backup: 100,
                 callback: function(){
                     self.op = Math.round(this.pos.x)/100;
-                    var rgba = {
-                        rgba: toRgba(self.color, self.op),
-                        hex: toHex(self.color, self.op)
-                    };
-                    self.opacityCallBack(self.target, rgba);
+
+                    self.opacityCallBack(self.target, self.colorFormat());
                 }
             });
+        },
+        colorFormat: function(){
+            var self = this,
+            rgba = {
+                rgba: toRgba(self.color, self.op),
+                hex: toHex(self.color, self.op)
+            };
+            return rgba;
         },
         getObjPos: function(el){
             var cp = $(this.cp)

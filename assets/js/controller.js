@@ -103,6 +103,17 @@ define(['jquery','ctlchange','tpm','drag','colorPicker','tab'], function($, rend
         $.post('/saveChange', { 'tags': tags });
     });
     //颜色控制
+    function rgbaBgColor(id, text){
+        if(navigator.userAgent.indexOf("MSIE 6.0") > 0 || navigator.userAgent.indexOf("MSIE 7.0") > 0
+           || navigator.userAgent.indexOf("MSIE 8.0") > 0){
+            $(id).css({
+                'background-color': 'none',
+                'filter': 'progid:DXImageTransform.Microsoft.gradient(startColorstr='+ text.hex +',endColorstr='+ text.hex +');'
+            });
+           return;
+       }
+       $(id).css({'background-color': text.rgba});
+    }
     $('#controller-design-colors a').colorPicker({
         callback: function(obj, color){
             obj.css({
@@ -110,23 +121,15 @@ define(['jquery','ctlchange','tpm','drag','colorPicker','tab'], function($, rend
             });
             var id = obj.attr('data-id') !== 'body' ? '#'+obj.attr('data-id') : 'body';
             if(id === 'body' || id === '#layout-page'){
-                $(id).css({'background-color': color});
+                rgbaBgColor(id, color);
                 return;
             }
             $(id).css({'color': color});
         },
-        opacityCallBack: function(obj, text){
+        opacityCallBack: function(obj, color){
            var id = obj.attr('data-id') !== 'body' ? '#'+obj.attr('data-id') : 'body';
            if(id === 'body' || id === '#layout-page'){
-               if(navigator.userAgent.indexOf("MSIE 6.0") > 0 || navigator.userAgent.indexOf("MSIE 7.0") > 0
-                   || navigator.userAgent.indexOf("MSIE 8.0") > 0){
-                    $(id).css({
-                        'background-color': 'none',
-                        'filter': 'progid:DXImageTransform.Microsoft.gradient(startColorstr='+ text.hex +',endColorstr='+ text.hex +');'
-                    });
-                   return;
-               }
-               $(id).css({'background-color': text.rgba});
+               rgbaBgColor(id, color);
                return;
            }
         }
