@@ -14,6 +14,8 @@ var infoSchema = new Schema({
     username: String,
     tags: String,
     des: String,
+    bodyColor: Object,
+    pageColor: Object,
     pos: Object,
     controller: Object
 });
@@ -30,6 +32,7 @@ var LayoutPos = {};
 
 LayoutPos.save = function(uid, data, callback){
     LayoutModel.update({uid: uid}, {$set: data}, {upsert: true, multi: false}, function(err, doc){
+        console.log(err);
        callback(err, doc);
     });
 };

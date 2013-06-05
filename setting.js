@@ -6,7 +6,7 @@
  * To change this template use File | Settings | File Templates.
  */
  module.exports = {
-    cookieSecret: 'sns',
+    cookieSecret: 'socard',
     db: 'mongodb://127.0.0.1:27017/socard'
 //     db: 'mongodb://johnqing:liuqing@dharma.mongohq.com:10007/gome'
  };

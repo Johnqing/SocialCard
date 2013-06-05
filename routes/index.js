@@ -126,6 +126,7 @@ module.exports = function(app){
                     return res.redirect('/');
                 }
                 userInfo = userInfoUp(userInfo);
+                console.log(userInfo);
                 res.render('user',{
                     title:'主页',
                     user: req.session.user,
@@ -149,6 +150,8 @@ module.exports = function(app){
             userInfo.username = userInfo.username || "姓名";
             userInfo.tags = userInfo.tags || "";
             userInfo.des = userInfo.des || "";
+            userInfo.bodyColor = userInfo.bodyColor || {bg:'', op: '1', color: '#000000'};
+            userInfo.pageColor = userInfo.pageColor || {bg:'', op: '1', color: '#000000'};
             return userInfo;
         }
     });
@@ -182,6 +185,7 @@ module.exports = function(app){
         if(data.des){
             data.des = data.des.replace(/\'/ig,"&quot;");
         }
+        console.log(data);
         layoutPos.save(req.session.user.uid, data, function(err){
             if(err){
                 req.flash('error', err);

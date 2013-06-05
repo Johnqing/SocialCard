@@ -1,4 +1,24 @@
 <%- include header.html %>
+<% if(locals.pos){%>
+<script type="text/javascript">
+    var baseConfig = {
+        username: '<%= locals.pos.username %>',
+        tags: '<%= locals.pos.tags %>',
+        des: '<%- locals.pos.des %>'
+
+    };
+    var styleRender = {
+        body: {
+            color: '<%- pos.bodyColor.color %>',
+            op: '<%- pos.bodyColor.op %>'
+        },
+        'layout-page': {
+            color: '<%- pos.pageColor.color %>',
+            op: '<%- pos.pageColor.op %>'
+        }
+    }
+</script>
+<% } %>
 <link rel="stylesheet" href="/css/user.css"/>
 <style type="text/css">
     #controller{
@@ -8,6 +28,12 @@
     #layout-page{
         left:<%= pos.pos.left %>px;
         top:<%= pos.pos.top %>px;
+    }
+    body{
+       <%- pos.bodyColor.bg %>
+    }
+    #layout-page{
+       <%- pos.pageColor.bg %>
     }
 </style>
 <div class="main">

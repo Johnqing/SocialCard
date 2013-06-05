@@ -115,20 +115,21 @@ define(['jquery','ctlchange','tpm','drag','colorPicker','tab'], function($, rend
     });
     //颜色控制
     function rgbaBgColor(id, text){
-        if(navigator.userAgent.indexOf("MSIE 6.0") > 0 || navigator.userAgent.indexOf("MSIE 7.0") > 0
-           || navigator.userAgent.indexOf("MSIE 8.0") > 0){
-            $(id).css({
-                'background-color': 'none',
-                'filter': 'progid:DXImageTransform.Microsoft.gradient(startColorstr='+ text.hex +',endColorstr='+ text.hex +');'
-            });
-           return;
-       }
-       $(id).css({'background-color': text.rgba});
+        $(id).css({
+            'background-color': 'none',
+            'filter': 'progid:DXImageTransform.Microsoft.gradient(startColorstr='+ text.hex +',endColorstr='+ text.hex +');'
+        }).css({'background-color': text.rgba});
+        if(id == "body"){
+            $.post('/saveChange', {'bodyColor': {color: text.color,op: text.op,bg:'background-color:'+text.rgba+';\n*background-color: none;\nfilter: progid:DXImageTransform.Microsoft.gradient(startColorstr='+ text.hex +',endColorstr='+ text.hex +')'}});
+            return;
+        }
+        $.post('/saveChange', {'pageColor': {color: text.color,op: text.op,bg:'background-color:'+text.rgba+';\n*background-color: none;\nfilter: progid:DXImageTransform.Microsoft.gradient(startColorstr='+ text.hex +',endColorstr='+ text.hex +')'}});
+
     }
     $('#controller-design-colors a').colorPicker({
-        callback: function(obj, color){
+        callback: function(obj, color, colorHex){
             obj.css({
-                'background-color': color
+                'background-color': colorHex
             });
             var id = obj.attr('data-id') !== 'body' ? '#'+obj.attr('data-id') : 'body';
             if(id === 'body' || id === '#layout-page'){

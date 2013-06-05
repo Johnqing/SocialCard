@@ -45,8 +45,9 @@ define(['jquery','tpm','drag'], function($, Ntpl){
         this.opacityCallBack = opts.opacityCallBack;
 
         this.cp = null;
-        this.color = "#000000";
-        this.op = 1;
+        this.id = target.attr('data-id');
+        this.color = styleRender[this.id].color;
+        this.op = styleRender[this.id].op;
 
         this.init();
     };
@@ -82,7 +83,7 @@ define(['jquery','tpm','drag'], function($, Ntpl){
                 oTarget.parentNode.tagName.toUpperCase() === "LI" && (oTarget = oTarget.parentNode);
                 if(oTarget.tagName.toUpperCase() === "LI") {
                     self.color = $(oTarget).attr('data-color');
-                    self.callback(self.target, self.colorFormat());
+                    self.callback(self.target, self.colorFormat(), self.color);
                 }
                 self.closeColorPicker();
             });
@@ -108,7 +109,9 @@ define(['jquery','tpm','drag'], function($, Ntpl){
             var self = this,
             rgba = {
                 rgba: toRgba(self.color, self.op),
-                hex: toHex(self.color, self.op)
+                hex: toHex(self.color, self.op),
+                color: self.color,
+                op: self.op
             };
             return rgba;
         },
