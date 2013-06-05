@@ -8,7 +8,7 @@ define(['jquery','ctlchange','tpm','drag','colorPicker','tab'], function($, rend
     contTitle.click(function(){
         var conNode = $(this).next(".constroller-con");
         conNode.slideToggle("slow").siblings(".constroller-con:visible").slideUp("slow");
-        var h = conNode.find('li:eq(0)').height();
+        var h = conNode.find('li.active').height();
         conNode.find('ul').height(h);
     });
     //二级切换
@@ -18,7 +18,7 @@ define(['jquery','ctlchange','tpm','drag','colorPicker','tab'], function($, rend
             oUL = self.parents('ul'),
             index = self.index() + 1,
             liItem = oUL.find('li:eq('+index+')');
-        liItem.show().siblings(':not(:first)').hide();
+        liItem.addClass('active').show().siblings(':not(:first)').removeClass('active').hide();
         oUL.css("position","relative").animate({left: ~250, height: liItem.innerHeight()}, "slow");
     });
     //点击头部切换
