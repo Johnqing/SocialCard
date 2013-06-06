@@ -16,7 +16,7 @@ app.configure(function(){
     app.set('view engine', 'html');
     app.engine('.html', require('ejs').__express);
     app.use(flash());
-    app.use(express.favicon());
+    app.use(express.favicon(__dirname+'/favicon.ico'));
     app.use(express.logger('dev'));
     app.use(express.bodyParser());
     app.use(express.methodOverride());
