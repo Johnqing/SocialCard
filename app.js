@@ -27,8 +27,8 @@ app.configure(function(){
         cookie: {maxAge: 900000}
         //store: store
     }));
+    app.use(express.static(path.join(__dirname, '/assets')));
     app.use(app.router);
-    app.use(express.static(path.join(__dirname, 'assets')));
 });
 //开发环境
 app.configure('development', function(){
