@@ -16,7 +16,7 @@ app.configure(function(){
     app.set('view engine', 'html');
     app.engine('.html', require('ejs').__express);
     app.use(flash());
-    app.use(express.favicon());
+    app.use(express.favicon(__dirname+'/favicon.ico'));
     app.use(express.logger('dev'));
     app.use(express.bodyParser());
     app.use(express.methodOverride());
@@ -27,8 +27,8 @@ app.configure(function(){
         cookie: {maxAge: 900000}
         //store: store
     }));
+    app.use(express.static(path.join(__dirname, '/assets')));
     app.use(app.router);
-    app.use(express.static(path.join(__dirname, 'assets')));
 });
 //开发环境
 app.configure('development', function(){

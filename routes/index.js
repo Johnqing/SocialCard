@@ -146,7 +146,6 @@ module.exports = function(app){
         if(data.des){
             data.des = data.des.replace(/\'/ig,"&quot;");
         }
-        console.log(data);
         layoutPos.save(req.session.user.uid, data, function(err){
             if(err){
                 req.flash('error', err);
@@ -154,6 +153,9 @@ module.exports = function(app){
             }
             res.json({success: 1})
         });
+    });
+    app.all('*', function(req, res){
+        res.render("404");
     });
 };
 

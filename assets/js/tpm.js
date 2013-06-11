@@ -15,7 +15,7 @@ define(function(){
     var _compile  = function(str){
         var fnBody = "var _tpl_array=[];\nvar fn=(function(__data__){\nvar _tplName='';\nfor(name in __data__){\n_tplName+=('var '+name+'=__data__[\"'+name+'\"];');\n};\neval(_tplName);\n_tpl_array.push('"+_analysisStr(str)+"');\n_tplName=null;\n})(tplObj);\nfn = null;\nreturn _tpl_array.join('');";
         return new Function('tplObj', fnBody);
-    }
+    };
     /**
      * 解析器
      * @param str
