@@ -15,12 +15,35 @@
         'layout-page': {
             color: '<%- pos.pageColor.color %>',
             op: '<%- pos.pageColor.op %>'
+        },
+        'userpage-layout-about-name': {
+            color: '<%- pos.nameColor.color %>',
+            op: '<%- pos.nameColor.op %>'
+        },
+        'userpage-layout-tag-container': {
+            color: '<%- pos.tagsColor.color %>',
+            op: '<%- pos.tagsColor.op %>'
+        },
+        'userpage-layout-about-description': {
+            color: '<%- pos.desColor.color %>',
+            op: '<%- pos.desColor.op %>'
+        },
+        'color_4': {
+            color: '<%- pos.conColor.color %>',
+            op: '<%- pos.conColor.op %>'
+        },
+        'color_5': {
+            color: '<%- pos.linksColor.color %>',
+            op: '<%- pos.linksColor.op %>'
         }
     }
 </script>
 <% } %>
 <link rel="stylesheet" href="/css/user.css"/>
 <style type="text/css">
+    body{
+       <%- pos.bodyColor.bg %>
+    }
     #controller{
         left:<%= pos.controller.left %>px;
         top:<%= pos.controller.top %>px;
@@ -28,12 +51,22 @@
     #layout-page{
         left:<%= pos.pos.left %>px;
         top:<%= pos.pos.top %>px;
+        <%- pos.pageColor.bg %>
     }
-    body{
-       <%- pos.bodyColor.bg %>
+    #userpage-layout-about-name{
+        color:<%- pos.nameColor.color %>
     }
-    #layout-page{
-       <%- pos.pageColor.bg %>
+    #userpage-layout-tag-container a{
+        color:<%- pos.tagsColor.color %>
+    }
+    #userpage-layout-about-description{
+        color:<%- pos.desColor.color %>
+    }
+    #userpage-layout-content{
+        color:<%- pos.conColor.color %>
+    }
+    #userpage-layout-links{
+        color:<%- pos.linksColor.color %>
     }
 </style>
 <div class="main">

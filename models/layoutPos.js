@@ -16,6 +16,11 @@ var infoSchema = new Schema({
     des: String,
     bodyColor: Object,
     pageColor: Object,
+    nameColor: Object,
+    tagsColor: Object,
+    desColor: Object,
+    conColor: Object,
+    linksColor: Object,
     pos: Object,
     controller: Object
 });

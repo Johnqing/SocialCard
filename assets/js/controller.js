@@ -136,7 +136,32 @@ define(['jquery','ctlchange','tpm','drag','colorPicker','tab'], function($, rend
                 rgbaBgColor(id, color);
                 return;
             }
-            $(id).css({'color': color});
+            if($(id).find('a')){
+                $(id).find('a').css('color',color.color);
+            }else{
+                $(id).css('color',color.color);
+            }
+
+            var data = null;
+            switch (obj.attr('data-id')){
+                case 'userpage-layout-about-name':
+                    data = {'nameColor': {color: color.color}};
+                    break;
+                case 'userpage-layout-tag-container':
+                    data = {'tagsColor': {color: color.color}};
+                    break;
+                case 'userpage-layout-about-description':
+                    data = {'desColor': {color: color.color}};
+                    break;
+                case 'userpage-layout-content':
+                    data = {'conColor': {color: color.color}};
+                    break;
+                case 'userpage-layout-links':
+                    data = {'linksColor': {color: color.color}};
+                    break;
+
+            };
+            $.post('/saveChange', data);
         },
         opacityCallBack: function(obj, color){
            var id = obj.attr('data-id') !== 'body' ? '#'+obj.attr('data-id') : 'body';

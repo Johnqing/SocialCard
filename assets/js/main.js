@@ -10,7 +10,7 @@ require.config({
 /**
  * 主体
  */
-require(['jquery','ctlchange','jeditor','drag','controller'], function($,renderCard){
-
+require(['require','jquery','ctlchange','jeditor','drag'], function(require, $, renderCard){
     renderCard();
+    require(['./controller']);
 });
