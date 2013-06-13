@@ -136,7 +136,7 @@ define(['jquery','ctlchange','tpm','drag','colorPicker','tab'], function($, rend
                 rgbaBgColor(id, color);
                 return;
             }
-            if($(id).find('a')){
+            if(id === '#userpage-layout-tag-container'){
                 $(id).find('a').css('color',color.color);
             }else{
                 $(id).css('color',color.color);
